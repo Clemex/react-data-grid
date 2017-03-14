@@ -1,3 +1,46 @@
+# Notes for Clemex
+
+## Building
+
+* Retrieve the sources
+```
+git clone git@github.com:Clemex/react-data-grid.git
+cd react-data-grid
+```
+
+* Initialize the package build branches
+```
+for pkg in react-data-grid{,-addons,-examples}; do
+    pushd packages/$pkg
+    git init
+    git remote add origin git@github.com:Clemex/react-data-grid.git
+    git fetch origin build/$pkg
+    git checkout -f -b build/$pkg origin/build/$pkg
+    echo 'node_modules/' >>| .git/info/exclude
+    echo 'src/' >>| .git/info/exclude
+    popd
+done
+```
+
+* Make your changes in the project
+
+* Build the packages
+```
+npm install && npm run build
+```
+
+* Commit the new built packages. This command will ask you for three commit
+  messages, for `react-data-grid`, `react-data-grid-addons` and
+  `react-data-grid-examples`.
+```
+for pkg in react-data-grid{,-addons,-examples}; do
+    pushd packages/$pkg
+    git add -A
+    git commit
+    popd
+done
+```
+
 # React Data Grid 
 [![Build status](https://ci.appveyor.com/api/projects/status/smciktvlkvp6r8w7/branch/master?svg=true)](https://ci.appveyor.com/project/adazzle/react-data-grid/branch/master)[![Coverage Status](https://coveralls.io/repos/adazzle/react-data-grid/badge.svg?branch=master)](https://coveralls.io/r/adazzle/react-data-grid?branch=master) [![npm version](https://badge.fury.io/js/react-data-grid.svg)](http://badge.fury.io/js/react-data-grid) 
 ![npm dependencies](https://david-dm.org/adazzle/react-data-grid.svg)
